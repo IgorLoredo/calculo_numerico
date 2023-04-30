@@ -1,0 +1,37 @@
+function [L,U] = crout(A)
+% Calcula a decomposição LU da matriz A pelo Método de Crout
+% Entrada: A - matriz quadrada de ordem n
+% Saída: L - matriz triangular inferior de ordem n
+%        U - matriz triangular superior de ordem n
+
+n = size(A,1);
+L = eye(n); % inicializa a matriz L como identidade
+U = zeros(n); % inicializa a matriz U como nula
+
+for j = 1:n
+    for i = j:n
+        s = 0;
+        for k = 1:j-1
+            s = s + L(i,k)*U(k,j);
+        end
+        L(i,j) = A(i,j) - s; % calcula o elemento da matriz L
+    end
+
+    for i = j:n
+        s = 0;
+        for k = 1:j-1
+            s = s + L(j,k)*U(k,i);
+        end
+        U(j,i) = (A(j,i) - s)/L(j,j); % calcula o elemento da matriz U
+    end
+end
+
+disp("L = ");
+disp(L);
+disp("U = ");
+disp(U);
+end
+
+A = input("");
+crout(A);
+
